@@ -1,3 +1,5 @@
+### Note: This is fork of [pfeed plugin](http://github.com/parolkar/pfeed "parolkar's pfeed") , this includes capability of assigning geographic information to feeds 
+
 Pfeed
 ======
 

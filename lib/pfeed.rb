@@ -55,7 +55,7 @@ module ParolkarInnovationLab
      
       def receives_pfeed
         has_many :pfeed_deliveries , :as => :pfeed_receiver 
-        has_many :pfeed_inbox, :class_name => 'PfeedItem', :foreign_key => "pfeed_item_id" , :through => :pfeed_deliveries , :source => :pfeed_item
+       # has_many :pfeed_inbox, :class_name => 'PfeedItem', :foreign_key => "pfeed_item_id" , :through => :pfeed_deliveries , :source => :pfeed_item
 
 	write_inheritable_attribute(:is_pfeed_receiver,true)
         class_inheritable_reader :is_pfeed_receiver
@@ -74,11 +74,29 @@ module ParolkarInnovationLab
     module InstanceMethods
     
       def itself
-	self
+	      self
       end
       def all_in_its_class
         self.class.find :all
       end
+      
+      def pfeed_inbox(options)    
+        default_options = {:within_distance => 10 , :since => 10.years.ago}   
+        options = default_options.merge(options)
+        pfeed_deliveries_arr = self.pfeed_deliveries.find(:all,:conditions => ['created_at > ? and at_distance < ?', options[:since],options[:within_distance]],:order => "created_at DESC ")
+
+        pfeed_items = []
+
+        pfeed_deliveries_arr.each {|pd|
+          pfeed_item = pd.pfeed_item
+          pfeed_item.distance =  pd.at_distance
+          pfeed_items << pfeed_item
+          }
+        return pfeed_items
+      end
+      
+      
+      
       private
         #let private methods come here
     end
