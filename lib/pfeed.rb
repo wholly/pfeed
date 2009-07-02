@@ -81,10 +81,17 @@ module ParolkarInnovationLab
       end
       
       def pfeed_inbox(options)    
-        default_options = {:within_distance => 10 , :since => 10.years.ago}   
+        default_options = {:within_distance => 10 , :since => 10.years.ago, :limit => 15}   
         options = default_options.merge(options)
-        pfeed_deliveries_arr = self.pfeed_deliveries.find(:all,:conditions => ['created_at > ? and at_distance < ?', options[:since],options[:within_distance]],:order => "created_at DESC ")
-
+        conditions = []
+        condition_str = ""
+        condition_str << "created_at > ? and at_distance < ? "
+        condition_str << "and id < ?" if options.has_key?(:from_id)
+        conditions << condition_str 
+        conditions << options[:since] << options[:within_distance]
+        conditions << options[:from_id] if options.has_key?(:from_id)
+        #pfeed_deliveries_arr = self.pfeed_deliveries.find(:all,:conditions => ['created_at > ? and at_distance < ?', options[:since],options[:within_distance]],:order => "created_at DESC ")
+        pfeed_deliveries_arr = self.pfeed_deliveries.find(:all, :limit => options[:limit],:conditions => conditions,:order => "created_at DESC ")
         pfeed_items = []
 
         pfeed_deliveries_arr.each {|pd|
