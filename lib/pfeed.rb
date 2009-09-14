@@ -78,8 +78,15 @@ module ParolkarInnovationLab
       end
       def all_in_its_class
         self.class.find :all
+      end    
+      
+      def pfeed_recent_item_timestamp  
+        self.pfeed_deliveries.last.created_at
+      rescue
+        nil
       end
       
+
       def pfeed_inbox(options)    
         default_options = {:within_distance => 10 , :since => 10.years.ago, :limit => 15}   
         options = default_options.merge(options)
@@ -103,7 +110,7 @@ module ParolkarInnovationLab
       end
       
       
-      
+     
       private
         #let private methods come here
     end
