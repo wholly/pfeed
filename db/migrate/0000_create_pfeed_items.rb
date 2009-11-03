@@ -8,6 +8,7 @@ class CreatePfeedItems < ActiveRecord::Migration
      t.string :participant_type
      t.text   :data
      t.datetime :expiry
+     t.boolean :archived, :default => false
      t.timestamps
    end
  end

@@ -7,6 +7,7 @@ class CreatePfeedDeliveries < ActiveRecord::Migration
      t.integer :pfeed_item_id       
      t.integer :location_id  
      t.decimal :at_distance , :precision => 15, :scale => 10  
+     t.boolean :archived, :default => false
      t.timestamps
    end
   end
