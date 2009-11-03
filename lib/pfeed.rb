@@ -94,6 +94,7 @@ module ParolkarInnovationLab
         condition_str = ""
         condition_str << "created_at > ? and at_distance < ? "
         condition_str << "and id < ?" if options.has_key?(:from_id)
+        condition_str << "and archived = false" if !(options.has_key?(:includes_archived) && options[:includes_archived])
         conditions << condition_str 
         conditions << options[:since] << options[:within_distance]
         conditions << options[:from_id] if options.has_key?(:from_id)
