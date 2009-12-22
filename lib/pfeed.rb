@@ -76,6 +76,7 @@ module ParolkarInnovationLab
       def itself
 	      self
       end
+
       def all_in_its_class
         self.class.find :all
       end    
@@ -85,10 +86,15 @@ module ParolkarInnovationLab
       rescue
         nil
       end
-      
+
+      def pfeed_recent_delivery_id(pfeedid)  
+        self.pfeed_deliveries.find_by_pfeed_item_id(pfeedid.to_i).id
+      rescue
+        nil
+      end
 
       def pfeed_inbox(options)    
-        default_options = {:within_distance => 10 , :since => 10.years.ago, :limit => 15}   
+        default_options = {:within_distance => 6378.10, :since => 10.years.ago, :limit => 15}   
         options = default_options.merge(options)
         conditions = []
         condition_str = ""
