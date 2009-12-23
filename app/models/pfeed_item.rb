@@ -13,7 +13,7 @@ class PfeedItem < ActiveRecord::Base
   
   attr_accessor :temp_references # this is an temporary Hash to hold references to temporary Objects   
   attr_accessor :distance # this is a very special attribute which is used by pfeed_inbox to populate the distance from pfeed_deliveries
-    
+  attr_accessor :delivered_at  
 
   def self.log(ar_obj,method_name,method_name_in_past_tense,returned_result,*args_supplied_to_method,&block_supplied_to_method)
      #puts "#{ar_obj.class.to_s},#{method_name},#{method_name_in_past_tense},#{returned_result},#{args_supplied_to_method.length}"

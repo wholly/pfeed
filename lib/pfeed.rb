@@ -111,6 +111,7 @@ module ParolkarInnovationLab
         pfeed_deliveries_arr.each {|pd|
           pfeed_item = pd.pfeed_item
           pfeed_item.distance =  pd.at_distance
+          pfeed_item.delivered_at = pd.created_at
           pfeed_items << pfeed_item
           }
         return pfeed_items
